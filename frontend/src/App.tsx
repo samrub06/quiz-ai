@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import QuizHistoryPage from './pages/QuizHistoryPage';
 import QuizPage from './pages/QuizPage';
@@ -23,6 +23,7 @@ function App() {
     <Router>
       <Layout isRTL={isRTL} language={i18n.language} onLangChange={handleLangChange}>
         <Routes>
+          <Route path="/" element={<Navigate to="/quiz" replace />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/history" element={<QuizHistoryPage />} />
         </Routes>
