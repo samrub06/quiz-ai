@@ -1,6 +1,6 @@
 # Quiz-AI Fullstack App
 
-![Architecture Diagram](../drawio_ai.png)
+![Architecture Diagram](/drawio_ai.png)
 
 ## Architecture
 
