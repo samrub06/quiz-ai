@@ -22,21 +22,29 @@ const quizSchema = z.object({
   type: z.string().optional() 
 });
 
+function containsForbiddenWords(str) {
+  if (!str) return false;
+  return containsForbiddenWord.some(word => str.toLowerCase().includes(word));
+}
+
 function validateQuizInput(req, res, next) {
   try {
     req.body = quizSchema.parse(req.body);
     // Validation topic
-
-    if (containsForbiddenWord(req.body.topic || req.body.subtopic)) {
-      return res.status(400).json({ error: 'Topic contains forbidden word' });
+    if (containsForbiddenWords(req.body.topic) || containsForbiddenWords(req.body.subtopic)) {
+      const err = new Error('Topic contains forbidden word');
+      err.status = 400;
+      return next(err);
     }
-
     if (req.body.type && !allowedTypes.includes(req.body.type)) {
-      return res.status(400).json({ error: 'Invalid quiz type' });
-    } 
+      const err = new Error('Invalid quiz type');
+      err.status = 400;
+      return next(err);
+    }
     next();
   } catch (err) {
-    res.status(400).json({ error: err.errors });
+    err.status = 400;
+    next(err);
   }
 }
 
