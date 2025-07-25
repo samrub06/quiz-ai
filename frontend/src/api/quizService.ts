@@ -5,14 +5,14 @@ export async function streamQuiz(
   onQuestion: (q: QuizQuestion) => void,
   onComplete?: () => void
 ): Promise<void> {
-  console.log('Starting stream with params:', params);
   
   // Add timeout to the fetch request
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 seconds timeout
   
   try {
-    const response = await fetch('http://localhost:3000/api/quiz/stream', {
+    const API_URL = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${API_URL}/quiz/stream`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params),
@@ -41,7 +41,6 @@ export async function streamQuiz(
     while (true) {
       const { value, done } = await reader.read();
       if (done) {
-        console.log('Stream done, total questions received:', questionCount);
         break;
       }
       
@@ -53,7 +52,6 @@ export async function streamQuiz(
         if (part.startsWith('data: ')) {
           const data = part.replace('data: ', '');
           if (data === 'done') {
-            console.log('Received done signal');
             if (onComplete) onComplete();
             continue;
           }
@@ -66,8 +64,8 @@ export async function streamQuiz(
               'correctAnswer' in question &&
               'explanation' in question
             ) {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               questionCount++;
-              console.log('Received question:', questionCount, question.question.substring(0, 50) + '...');
               // Accept questions with or without 'choices'
               onQuestion(question);
             }
@@ -79,7 +77,6 @@ export async function streamQuiz(
       }
     }
     
-    console.log('Stream completed, calling onComplete');
     if (onComplete) onComplete();
     
   } catch (error) {

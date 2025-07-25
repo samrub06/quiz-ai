@@ -31,13 +31,11 @@ describe('streamQuizToRes', () => {
 
     await streamQuizToRes({}, res);
 
-    // Récupère tous les appels à res.write
     const writeCalls = res.write.mock.calls.map(call => call[0]);
-    console.log(writeCalls);
-    // Vérifie qu'au moins un appel contient la question
+    // Check that at least one call contains the question
     expect(writeCalls.some(call => call.includes('"question":"Q1"'))).toBe(true);
 
-    // Vérifie que res.end a bien été appelé
+    // Check that res.end has been called
     expect(res.end).toHaveBeenCalled();
   });
 }); 

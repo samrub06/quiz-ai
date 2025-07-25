@@ -14,6 +14,10 @@ app.use('/api/quiz', quizRouter);
 // Serve static files from the frontend build only in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  // For any other route, serve index.html (for SPA)
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  });
 
   
 }

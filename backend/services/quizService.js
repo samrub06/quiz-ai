@@ -48,11 +48,9 @@ async function streamQuizToRes(params, res) {
       if (line.startsWith('data: ')) {
         const data = line.replace('data: ', '');
         if (data === '[DONE]') {
-          console.log(`Stream completed. Generated ${questionCount} questions out of ${nbQuestions} requested.`);
           
           // Check if we need to generate missing questions
           if (questionCount < nbQuestions) {
-            console.log(`Generating ${nbQuestions - questionCount} missing questions...`);
             await generateMissingQuestions(params, res, questionCount, nbQuestions);
           } else {
             res.write('event: end\ndata: done\n\n');
@@ -96,12 +94,10 @@ async function streamQuizToRes(params, res) {
                   question.choices = Object.values(question.choices);
                 }
                 questionCount++;
-                console.log(`Sending question ${questionCount}/${nbQuestions} to frontend:`, question.question.substring(0, 50) + '...');
                 res.write(`data: ${JSON.stringify(question)}\n\n`);
                 
                 // If we have all questions, end the stream
                 if (questionCount >= nbQuestions) {
-                  console.log(`All ${nbQuestions} questions generated. Ending stream.`);
                   res.write('event: end\ndata: done\n\n');
                   res.end();
                   return;
@@ -118,13 +114,9 @@ async function streamQuizToRes(params, res) {
       }
     }
   }
-  
-  // If we reach here, the stream ended but we might not have all questions
-  console.log(`Stream ended. Generated ${questionCount} questions out of ${nbQuestions} requested.`);
-  
+    
   // Check if we need to generate missing questions
   if (questionCount < nbQuestions) {
-    console.log(`Generating ${nbQuestions - questionCount} missing questions...`);
     await generateMissingQuestions(params, res, questionCount, nbQuestions);
   } else {
     res.write('event: end\ndata: done\n\n');
@@ -206,7 +198,6 @@ async function generateMissingQuestions(params, res, currentCount, targetCount) 
           
           generatedCount++;
           currentCount++;
-          console.log(`Sending fallback question ${currentCount}/${targetCount} to frontend:`, question.question.substring(0, 50) + '...');
           res.write(`data: ${JSON.stringify(question)}\n\n`);
         }
       } catch (e) {
@@ -214,7 +205,6 @@ async function generateMissingQuestions(params, res, currentCount, targetCount) 
       }
     }
     
-    console.log(`Fallback completed. Generated ${generatedCount} additional questions.`);
   } catch (error) {
     console.error('Error generating fallback questions:', error);
   }

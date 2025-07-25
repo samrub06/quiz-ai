@@ -55,12 +55,10 @@ export default function QuizPage() {
     resetState(); // Use centralized reset
     setLoading(true);
     setStep('quiz');
-    console.log('Starting quiz with params:', params);
     try {
       await streamQuiz(
         params, 
         (question) => {
-          console.log('Received question in QuizPage:', question.question.substring(0, 50) + '...');
           setQuestions(qs => {
             if (qs.length === 0) {
               setLoading(false); // loader off at first question
@@ -70,7 +68,6 @@ export default function QuizPage() {
         },
         () => {
           // Stream completed
-          console.log('Stream completed in QuizPage');
           setLoading(false);
         }
       );
@@ -162,7 +159,6 @@ export default function QuizPage() {
   };
 
   const handleShowResult = () => {
-    console.log('handleShowResult called, score:', score, 'questions:', questions.length);
     setStep('result');
     // Save QuizHistory array in localStorage with error handling
     try {
