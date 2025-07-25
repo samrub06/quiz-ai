@@ -1,4 +1,5 @@
 import type { QuizParams, QuizQuestion } from '../types/quiz';
+const API_URL = import.meta.env.VITE_API_URL;
 
 export async function streamQuiz(
   params: QuizParams,
@@ -11,7 +12,6 @@ export async function streamQuiz(
   const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 seconds timeout
   
   try {
-    const API_URL = import.meta.env.VITE_API_URL;
     const response = await fetch(`${API_URL}/quiz/stream`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
