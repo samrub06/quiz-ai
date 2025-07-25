@@ -1,69 +1,52 @@
-# React + TypeScript + Vite
+# Quiz-AI Fullstack App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Architecture Diagram](../drawio_ai.png)
 
-Currently, two official plugins are available:
+## Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is a fullstack AI-powered quiz application with the following structure:
 
-## Expanding the ESLint configuration
+### Frontend
+- **Framework:** React (with TypeScript)
+- **Bundler:** Vite
+- **UI:** Tailwind CSS
+- **Main Components:**
+  - `QuizPage`, `QuizHistoryPage` (pages)
+  - `QuizQuestionsPanel`, `QuizQuestion`, `QuizResult`, `QuizHistory`, `QuizForm`, `Header`, `QuizProgress`, `Layout`, `CustomSelect` (components)
+- **State Management:** React Context
+- **API Communication:** Fetch/axios to backend endpoints
+- **Features:**
+  - Dynamic quiz generation
+  - Real-time streaming of questions/answers for a fluid UI
+  - Optimistic UI updates (shows 10 questions, fallback if not all are received)
+  - Input sanitization before sending to backend
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Backend
+- **Framework:** Node.js with Express
+- **Main Files:**
+  - `index.js` (entrypoint)
+  - `services/quizService.js` (quiz logic, OpenAI API calls)
+  - `controllers/quiz.js` (handles quiz requests)
+  - `routes/quiz.js` (API endpoints)
+  - `middlewares/` (for security, validation, etc.)
+- **Features:**
+  - Receives quiz subject and parameters from frontend (JSON)
+  - Calls OpenAI API to generate questions/answers
+  - Streams responses to frontend
+  - Sanitizes and validates all inputs
+  - Security checks for inappropriate/racist/sexual subjects
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Challenges
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Prompt Imprecision:** It is difficult to get precise answers from the OpenAI API, which can result in unexpected or poorly formatted questions.
+- **OpenAI Session Limitation:** The API does not maintain context between requests, so there is no session persistence, making it hard to follow a multi-step quiz or conversation.
+- **Input Sanitization:** It is mandatory to clean and validate all user inputs to prevent injection or malicious prompts.
+- **Streaming for Fluid UI:** Implementing response streaming to display questions as they arrive, making the UI more responsive and pleasant.
+- **Optimistic UI & Fallback:** Displaying 10 questions immediately, but providing a fallback if the API does not return enough (e.g., network issues or token cost limits).
+- **Token Cost:** Using the OpenAI API incurs a cost proportional to the number of tokens generated, so prompt and response sizes must be limited.
+- **JSON Communication:** Frontend and backend communicate via JSON for simplicity and compatibility.
+- **Security on Subject:** A backend filter is implemented to reject inappropriate subjects (racism, sexuality, etc.) and avoid sending such prompts to the API.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---

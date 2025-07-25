@@ -9,7 +9,7 @@ async function streamQuizToRes(params, res) {
 
   // System prompt: global instructions for quiz generation
   const systemPrompt =
-    'You are a quiz generator. For each question, return exactly one JSON object per line, with the fields: question, correctAnswer, explanation, type. If the type is "mcq", add a "choices" array (4 options exactly). If the type is "true_false" or "open_ended", do NOT include the "choices" field at all. No extra text, no array, no explanation, no extra line, only one JSON object per line.';
+    'You are a quiz generator. For each question, return exactly one JSON object per line, with the fields: question, correctAnswer, explanation, type. If the type is "mcq", add a "choices" array (4 options exactly). If the type is "true_false" or "open_ended", do NOT include the "choices" field at all. No extra text, no array, no explanation, no extra line, only one JSON object per line. If the topic or request is abusive, racist, sexual, adult, or inappropriate for people under 18, respond with a single line: {"error": "inappropriate content"}.';
 
   // User prompt: only the specific request
   let typeLabel = type === 'mix' ? 'mcq, true_false, open_ended' : type;
@@ -71,6 +71,12 @@ async function streamQuizToRes(params, res) {
           if (openBraces > 0 && openBraces === closeBraces) {
             try {
               const question = JSON.parse(ndjsonBuffer);
+              // Check for inappropriate content error from the AI
+              if (question && question.error === 'inappropriate content') {
+                res.write('event: error\ndata: inappropriate content\n\n');
+                res.end();
+                return;
+              }
               if (
                 question &&
                 typeof question === 'object' &&
@@ -133,7 +139,7 @@ async function generateMissingQuestions(params, res, currentCount, targetCount) 
 
   // System prompt: global instructions for quiz generation
   const systemPrompt =
-    'You are a quiz generator. For each question, return exactly one JSON object per line, with the fields: question, correctAnswer, explanation, type. If the type is "mcq", add a "choices" array (4 options exactly). If the type is "true_false" or "open_ended", do NOT include the "choices" field at all. No extra text, no array, no explanation, no extra line, only one JSON object per line.';
+    'You are a quiz generator. For each question, return exactly one JSON object per line, with the fields: question, correctAnswer, explanation, type. If the type is "mcq", add a "choices" array (4 options exactly). If the type is "true_false" or "open_ended", do NOT include the "choices" field at all. No extra text, no array, no explanation, no extra line, only one JSON object per line. If the topic or request is abusive, racist, sexual, adult, or inappropriate for people under 18, respond with a single line: {"error": "inappropriate content"}.';
 
   // User prompt: only the specific request for missing questions
   let typeLabel = type === 'mix' ? 'mcq, true_false, open_ended' : type;
@@ -173,6 +179,12 @@ async function generateMissingQuestions(params, res, currentCount, targetCount) 
       
       try {
         const question = JSON.parse(line.trim());
+        // Check for inappropriate content error from the AI
+        if (question && question.error === 'inappropriate content') {
+          res.write('event: error\ndata: inappropriate content\n\n');
+          res.end();
+          return;
+        }
         if (
           question &&
           typeof question === 'object' &&
