@@ -7,9 +7,7 @@ const quizRouter = require('./routes/quiz.js');
 
 const app = express();
 
-if (process.env.NODE_ENV !== 'production') {
-  app.use(cors());
-}
+app.use(cors());
 app.use(express.json());
 app.use('/api/quiz', quizRouter);
 
