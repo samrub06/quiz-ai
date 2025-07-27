@@ -31,14 +31,14 @@ const Header: React.FC<HeaderProps> = ({ isRTL, language, onLangChange }) => {
             </div>
           </div>
           <div className="flex items-center ml-6 min-w-[120px] justify-end">
-            <div className="w-32">
+            <div className="">
               <CustomSelect
                 value={language}
                 onChange={onLangChange}
                 rtl={isRTL}
                 options={[
-                  { value: 'en', label: `🇺🇸 ${t('English')}` },
-                  { value: 'he', label: `🇮🇱 ${t('Hebrew')}` },
+                  { value: 'en', label: `🇺🇸` },
+                  { value: 'he', label: `🇮🇱` },
                 ]}
               />
             </div>

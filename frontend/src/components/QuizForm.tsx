@@ -108,8 +108,8 @@ export default function QuizForm({ params, onChange, onSubmit, loading, errors =
               aria-invalid={!!errors.type}
               aria-describedby={errors.type ? 'type-error' : undefined}
               className={`w-full px-3 py-2 sm:px-4 sm:py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400 text-sm sm:text-base ${errors.type ? 'border-red-500' : 'border-gray-300'}`}
+              placeholder={t('select_type')}
               options={[
-                { value: '', label: t('select_type') },
                 { value: 'mcq', label: t('multiple_choice') },
                 { value: 'true_false', label: t('true_false') },
                 { value: 'open_ended', label: t('open_ended') },
@@ -127,8 +127,8 @@ export default function QuizForm({ params, onChange, onSubmit, loading, errors =
                 name="level"
                 value={params.level || ''}
                 onChange={onChange}
+                placeholder={t('level')}
                 options={[
-                  { value: '', label: t('level') },
                   { value: 'beginner', label: t('Beginner') },
                   { value: 'intermediate', label: t('Intermediate') },
                   { value: 'expert', label: t('Expert') },
