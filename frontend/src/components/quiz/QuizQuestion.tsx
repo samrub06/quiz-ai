@@ -158,6 +158,7 @@ export default function QuizQuestion({
         <input
           type="text"
           value={openAnswer}
+          autoFocus
           onChange={e => {
             setOpenAnswer(e.target.value);
             setOpenAnswerError(null); // Clear error on change
