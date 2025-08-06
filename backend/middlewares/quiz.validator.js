@@ -1,4 +1,5 @@
 const { z } = require('zod');
+const { QUIZ_TYPES } = require('../constants/quizTypes');
 
 const containsForbiddenWord = [
   "sex", 
@@ -11,7 +12,7 @@ const containsForbiddenWord = [
   "sexuality",
 ];
 
-const allowedTypes = ['mcq', 'true_false', 'open_ended','mix'];
+const allowedTypes = [QUIZ_TYPES.MCQ, QUIZ_TYPES.TRUE_FALSE, QUIZ_TYPES.OPEN_ENDED, QUIZ_TYPES.MIX];
 
 const quizSchema = z.object({
   topic: z.string().min(1),

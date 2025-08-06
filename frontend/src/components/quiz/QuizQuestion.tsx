@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import { QUIZ_TYPES } from '../../constants/quizTypes';
 import type { QuizQuestion } from '../../types/quiz';
 
 interface Props {
@@ -136,7 +137,7 @@ export default function QuizQuestion({
 
   // Display according question type
   let content;
-  if (question.type === 'open_ended') {
+  if (question.type === QUIZ_TYPES.OPEN_ENDED) {
     content = (
       <form
         onSubmit={e => {
@@ -180,7 +181,7 @@ export default function QuizQuestion({
         </button>
       </form>
     );
-  } else if (question.type === 'true_false') {
+  } else if (question.type === QUIZ_TYPES.TRUE_FALSE) {
     content = (
       <div className="space-y-4" role="listbox" aria-label={t('choices')}>
         {['True', 'False'].map((choice, index) => (

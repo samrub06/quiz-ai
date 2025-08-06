@@ -50,3 +50,19 @@ This project is a fullstack AI-powered quiz application with the following struc
 - **Security on Subject:** A backend filter is implemented to reject inappropriate subjects (racism, sexuality, etc.) and avoid sending such prompts to the API.
 
 ---
+
+// Before: 156 characters
+"with the fields: question, correctAnswer, explanation, type. If the type is "mcq", add a "choices" array"
+
+// After: 67 characters
+"with the fields: q (question), ca (correctAnswer), exp (explanation), t (type). If the type is "m", add a "c" array (4 options exactly). If the type is "tf" or "oe", do NOT include the "c" field at all."
+
+4. Response Processing
+Updated both parsing locations to:
+Parse the short field response from OpenAI
+Map short fields to long fields using the helper function
+Continue with existing validation and processing
+Token Savings:
+System prompt: ~67 characters saved per call
+Response parsing: Each question response uses shorter field names
+Overall: Significant reduction in tokens, especially for multiple questions
