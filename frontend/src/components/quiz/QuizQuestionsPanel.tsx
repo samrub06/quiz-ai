@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { QuizQuestion } from '../types/quiz';
+import type { QuizQuestion } from '../../types/quiz';
 import QuizProgress from './QuizProgress';
 import QuizQuestionComp from './QuizQuestion';
 

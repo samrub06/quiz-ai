@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import type { QuizQuestion } from '../types/quiz';
+import type { QuizQuestion } from '../../types/quiz';
 
 interface Props {
   question: QuizQuestion;

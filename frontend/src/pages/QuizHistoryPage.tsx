@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import QuizHistory from '../components/QuizHistory';
+import QuizHistory from '../components/quiz/QuizHistory';
 import type { QuizHistory as QuizHistoryType } from '../types/quiz';
 
 export default function QuizHistoryPage() {

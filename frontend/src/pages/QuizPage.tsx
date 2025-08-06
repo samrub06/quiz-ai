@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { streamQuiz } from '../api/quizService';
-import QuizForm from '../components/QuizForm';
-import QuizQuestionsPanel from '../components/QuizQuestionsPanel';
-import QuizResult from '../components/QuizResult';
+import QuizForm from '../components/quiz/QuizForm';
+import QuizQuestionsPanel from '../components/quiz/QuizQuestionsPanel';
+import QuizResult from '../components/quiz/QuizResult';
 import type { QuizParams, QuizQuestion } from '../types/quiz';
 
 export default function QuizPage() {

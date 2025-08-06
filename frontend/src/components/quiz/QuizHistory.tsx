@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import type { QuizHistory } from '../types/quiz';
+import type { QuizHistory } from '../../types/quiz';
 
 interface Props {
   history: QuizHistory[];

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import type { QuizParams } from '../types/quiz';
-import CustomSelect from './CustomSelect';
+import type { QuizParams } from '../../types/quiz';
+import CustomSelect from '../common/CustomSelect';
 
 interface Props {
   params: QuizParams;

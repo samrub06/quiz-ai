@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import CustomSelect from './CustomSelect';
+import CustomSelect from '../common/CustomSelect';
 
 interface HeaderProps {
   isRTL: boolean;

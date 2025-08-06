@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import type { QuizQuestion } from '../types/quiz';
+import type { QuizQuestion } from '../../types/quiz';
 
 interface Props {
   questions: QuizQuestion[];
