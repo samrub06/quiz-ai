@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { QUIZ_TYPES, QUIZ_TYPE_LABELS } = require('../constants/quizTypes');
+const { QUIZ_TYPES } = require('../constants/quizTypes');
 
 // Helper function to map short field names to long field names
 function mapShortToLongFields(question) {
