@@ -2,6 +2,16 @@
 
 > **An intelligent AI-powered quiz application built with React, Node.js, and OpenAI API**
 
+
+## 🌐 **Live Demo**
+
+**[🚀 Try the App Live](https://quizz-ai-acb402f2f2f4.herokuapp.com/quiz)**
+
+### **App Screenshot**
+![Quiz-AI App Screenshot](quiz_ai_home.png)
+
+*Experience the AI-powered quiz generation in action with our live demo!*
+
 ---
 
 ## 📖 **Medium Post**
