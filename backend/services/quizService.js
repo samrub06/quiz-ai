@@ -50,7 +50,7 @@ async function streamQuizToRes(params, res) {
   if (subtopic) userPrompt += `, subtopic "${subtopic}"`;
   if (level) userPrompt += `, level "${level}"`;
   userPrompt += ".";
-  if (lang && lang !== 'en') userPrompt += ` The questions must be in ${lang}.`;
+  if (lang && lang !== 'en') userPrompt += ` The questions must be in language ${lang}.`;
 
   const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',

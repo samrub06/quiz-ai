@@ -9,7 +9,7 @@ export async function streamQuiz(
   
   // Add timeout to the fetch request
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 seconds timeout
+  const timeoutId = setTimeout(() => controller.abort(), 160000); // 30 seconds timeout
   
   try {
     const response = await fetch(`${API_URL}/quiz/stream`, {
